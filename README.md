@@ -24,7 +24,7 @@
 -   LongBuffer
 -   ShortBuffer
 
-#### 使用方法
+####  1、使用方法
 
 1.  使用`allocate()`方法获取一定大小的缓冲区：`ByteBuffer buffer = ByteBuffer.allocate(1024);`
 
@@ -34,14 +34,14 @@
 
 4.  使用`get()`获取缓冲区内的数据：`byte[] bytes = new byte[buffer.limit()]; buffer.get(bytes);`
 
-#### 核心属性
+#### 2、核心属性
 
 -   `mark`：标记， 表示记录当前position的位置，可通过reset()恢复到mark的位置
 -   `position`：位置，缓冲区中正在操作数据的位置
 -   `limit`：界限，缓冲区中可以操作数据的大小。 limit后的数据不可读写
 -   `capacity`：容量，表示缓冲区中最大存储数据的容量，一旦声明不可改变
 
-#### 直接缓冲区与非直接缓冲区
+#### 3、直接缓冲区与非直接缓冲区
 
 -   非直接缓冲区：通过`allocate()`方法分配缓冲区，缓冲区将建立在JVM的内存中
 
@@ -51,14 +51,14 @@
 
 > Channel表示IO源与目标打开的连接，类似于传统的流。不过Channel不能直接访问数据，Channel只能与Buffer进行交互
 
-#### 主要的Channel接口实现类
+#### 1、主要的Channel接口实现类
 
 -   FileChannel
 -   SocketChannel
 -   ServerSocketChannel
 -   DatagramChannel
 
-#### 使用方法
+#### 2、使用方法
 
 #####  获取通道
 
@@ -132,6 +132,30 @@
         outputMappedBuffer.put(bytes);
 
         // 关闭通道
+        inputChannel.close();
+        outputChannel.close();
+    }
+```
+
+#### 3、通道之间的数据传输
+
+-   主要方法
+
+    -   transferFrom()
+    -   transferTo()
+    
+```
+    @Test
+    public void test3() throws IOException {
+        // 使用Open()获取通道
+        FileChannel inputChannel = FileChannel.open(Paths.get("JavaNIO.iml"), StandardOpenOption.READ);
+        FileChannel outputChannel = FileChannel.open(Paths.get("JavaNIO2.iml"),
+                StandardOpenOption.READ, StandardOpenOption.WRITE, StandardOpenOption.CREATE_NEW);
+
+        // 通道间的数据传输(二用一)
+        // inputChannel.transferTo(0, inputChannel.size(), outputChannel);
+        outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+
         inputChannel.close();
         outputChannel.close();
     }

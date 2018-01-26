@@ -72,4 +72,23 @@ public class TestChannel {
         inputChannel.close();
         outputChannel.close();
     }
+
+    /**
+     * 通道间的数据传输(直接缓冲区).
+     */
+    @Test
+    public void test3() throws IOException {
+        // 使用Open()获取通道
+        FileChannel inputChannel = FileChannel.open(Paths.get("JavaNIO.iml"), StandardOpenOption.READ);
+        FileChannel outputChannel = FileChannel.open(Paths.get("JavaNIO2.iml"),
+                StandardOpenOption.READ, StandardOpenOption.WRITE, StandardOpenOption.CREATE_NEW);
+
+        // 通道间的数据传输(二用一)
+        // inputChannel.transferTo(0, inputChannel.size(), outputChannel);
+        outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+
+
+        inputChannel.close();
+        outputChannel.close();
+    }
 }
