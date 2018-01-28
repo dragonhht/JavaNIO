@@ -160,3 +160,10 @@
         outputChannel.close();
     }
 ```
+
+#### 4、分散(Scatter)与聚集(Gather)
+
+-   分散读取(Scattering Reads)： 将通道中的数据分散到多个缓冲区中
+
+-   聚集写入(Gathering Writes)：将多个缓冲区内的数据聚集到通道中
+

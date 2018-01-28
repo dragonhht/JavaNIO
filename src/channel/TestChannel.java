@@ -2,6 +2,7 @@ package channel;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -87,8 +88,35 @@ public class TestChannel {
         // inputChannel.transferTo(0, inputChannel.size(), outputChannel);
         outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
 
-
         inputChannel.close();
         outputChannel.close();
+    }
+
+    /**
+     * 分散与聚集.
+     */
+    @Test
+    public void test4() throws IOException {
+        // 获取通道
+        FileChannel inputChannel = FileChannel.open(Paths.get("JavaNIO.iml"), StandardOpenOption.READ);
+        FileChannel ouputChannel = FileChannel.open(Paths.get("JavaNIO2.iml"),
+                StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+
+        // 分配缓冲区数组
+        ByteBuffer buffer1 = ByteBuffer.allocate(1024);
+        ByteBuffer buffer2 = ByteBuffer.allocate(1024);
+        ByteBuffer[] buffers = {buffer1, buffer2};
+
+        // 分散读取
+        inputChannel.read(buffers);
+
+        // 聚集写入
+        for (ByteBuffer b : buffers) {
+            b.flip();
+        }
+        ouputChannel.write(buffers);
+
+        ouputChannel.close();
+        inputChannel.close();
     }
 }
