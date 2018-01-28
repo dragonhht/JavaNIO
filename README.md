@@ -79,7 +79,7 @@
 
 -   JDK 1.7中的NIO2中的Files工具类的`newByteChannel()`方法
 
-##### 使用通道复制文件
+##### 使用通道复制文件(本地IO)
 
 -   利用Channel完成文件的复制(非直接缓冲区).
 
@@ -167,3 +167,24 @@
 
 -   聚集写入(Gathering Writes)：将多个缓冲区内的数据聚集到通道中
 
+#### 5、[字符集](./src/channel/TestCharset.java)
+
+> 指定字符集，避免乱码。常用于CharBuffer与ByteBuffer之间。
+
+#### 6、网路IO(核心内容)
+
+> 传统IO为阻塞式的，NIO通过选择器实现非阻塞式IO
+
+-   核心内容
+
+    -   Channel
+    -   Buffer
+    -   Selector
+
+##### 1、[TCP连接](./src/channel/TCPChannel.java)
+
+> 主要Channel为SocketChannel与ServerSocketChannel;
+
+##### 2、[UDP连接](./src/channel/UDPChannel.java)
+
+> 主要Channel为
