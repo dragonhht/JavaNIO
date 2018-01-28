@@ -187,4 +187,9 @@
 
 ##### 2、[UDP连接](./src/channel/UDPChannel.java)
 
-> 主要Channel为
+> 主要Channel为DatagramChannel
+
+### 3、[管道](./src/pipe/TestPipe.java)
+
+> Java NIO 管道是2个线程之间的单向数据连接,Pipe有一个source通道和一个sink通道。数据会被写到sink通道，从source通道读取
+
